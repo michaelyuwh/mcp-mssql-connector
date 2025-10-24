@@ -7,9 +7,10 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "test": "node test-ci.cjs",
+    "test": "node test-minimal.cjs",
     "test:full": "node test.cjs",
     "test:ci": "node test-ci.cjs",
+    "test:minimal": "node test-minimal.cjs",
     "dev": "tsc --watch & node --watch dist/index.js",
     "prepare": "npm run build",
     "docker:build": "docker build -t mcp-mssql-server .",
