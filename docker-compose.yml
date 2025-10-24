@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  mcp-mssql-server:
+    build: .
+    container_name: mcp-mssql-server
+    # No environment variables needed - connection details provided per tool call
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    networks:
+      - mcp-network
+    # Mount volume for logs (optional)
+    volumes:
+      - ./logs:/app/logs:rw
+    # If you need to connect to a local MSSQL server
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # Optional: Include MSSQL Server for testing
+  mssql-server:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql-test-server
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Password123
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql
+      - ./init-scripts:/docker-entrypoint-initdb.d:ro
+    networks:
+      - mcp-network
+    restart: unless-stopped
+    # Uncomment to enable this service
+    profiles:
+      - testing
+
+networks:
+  mcp-network:
+    driver: bridge
+
+volumes:
+  mssql-data:

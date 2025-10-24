@@ -1,0 +1,47 @@
+{
+  "name": "mcp-mssql-server",
+  "version": "1.0.0",
+  "description": "MCP server for Microsoft SQL Server database access",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "node test.cjs",
+    "dev": "tsc --watch & node --watch dist/index.js",
+    "prepare": "npm run build",
+    "docker:build": "docker build -t mcp-mssql-server .",
+    "docker:run": "docker run -it --rm --env-file .env mcp-mssql-server",
+    "docker:compose": "docker-compose up --build",
+    "docker:compose:bg": "docker-compose up -d --build",
+    "docker:compose:down": "docker-compose down",
+    "docker:compose:logs": "docker-compose logs -f mcp-mssql-server"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "mssql": "^11.0.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/mssql": "^9.1.5",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  },
+  "keywords": [
+    "mcp",
+    "mssql",
+    "sql-server",
+    "database",
+    "ai-agent"
+  ],
+  "author": "michaelyuwh",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelyuwh/mcp-mssql-connector.git"
+  },
+  "bugs": {
+    "url": "https://github.com/michaelyuwh/mcp-mssql-connector/issues"
+  },
+  "homepage": "https://github.com/michaelyuwh/mcp-mssql-connector#readme"
+}

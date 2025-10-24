@@ -1,0 +1,57 @@
+{
+  "connectionDefaults": {
+    "requestTimeout": 30000,
+    "connectionTimeout": 15000,
+    "pool": {
+      "max": 10,
+      "min": 1,
+      "idleTimeoutMillis": 30000
+    }
+  },
+  
+  "security": {
+    "enableQueryValidation": true,
+    "maxQueryLength": 10000,
+    "allowedOperations": ["SELECT", "INSERT", "UPDATE", "DELETE", "WITH"],
+    "blockedKeywords": ["xp_cmdshell", "sp_execute", "openrowset", "opendatasource", "bulk", "exec(", "execute("],
+    "maxRowsPerQuery": 10000
+  },
+  
+  "features": {
+    "enableCaching": true,
+    "cacheTimeout": 300,
+    "enableMetrics": true,
+    "maxConcurrentQueries": 5
+  },
+  
+  "environments": {
+    "development": {
+      "security": {
+        "enableQueryValidation": false,
+        "maxQueryLength": 50000,
+        "allowedOperations": ["SELECT", "INSERT", "UPDATE", "DELETE", "CREATE", "ALTER", "DROP", "WITH"],
+        "blockedKeywords": ["xp_cmdshell", "sp_execute"],
+        "maxRowsPerQuery": 50000
+      },
+      "features": {
+        "enableCaching": true,
+        "enableMetrics": true,
+        "maxConcurrentQueries": 10
+      }
+    },
+    "production": {
+      "security": {
+        "enableQueryValidation": true,
+        "maxQueryLength": 5000,
+        "allowedOperations": ["SELECT"],
+        "blockedKeywords": ["xp_cmdshell", "sp_execute", "openrowset", "opendatasource", "bulk", "exec(", "execute(", "create", "alter", "drop", "truncate"],
+        "maxRowsPerQuery": 1000
+      },
+      "features": {
+        "enableCaching": true,
+        "enableMetrics": true,
+        "maxConcurrentQueries": 3
+      }
+    }
+  }
+}

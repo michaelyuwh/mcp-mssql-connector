@@ -1,0 +1,96 @@
+Requirement Document for MCP Tool – MSSQL Integration
+1. Project Overview
+The Model Context Protocol (MCP) tool is designed to enable AI agents to autonomously discover and access MSSQL database structures and data in a read-only manner. It supports schema exploration and metadata extraction without requiring prior knowledge of the database layout.
+2. Objectives
+- Allow AI agents to:
+  - Discover all databases, tables, and fields.
+  - Access metadata and sample data.
+  - Operate in a strictly read-only mode.
+- Prompt for connection credentials at the start of each session.
+3. Functional Requirements
+3.1 Initial Credential Prompt
+AI agent must provide:
+- IP address or hostname
+- Port number
+- Username
+- Password
+Credentials are used to establish a secure MSSQL connection.
+3.2 Schema Discovery
+- Enumerate all databases.
+- For each database:
+  - List all tables.
+  - For each table:
+    - List all columns with metadata (type, constraints).
+    - Provide sample rows (configurable limit).
+- Return results in structured format (e.g., JSON).
+3.3 Metadata Extraction
+- Include:
+  - Primary and foreign keys.
+  - Indexes and constraints.
+  - Views and stored procedures.
+  - Table relationships and dependencies.
+3.4 Read-Only Access
+- No write, update, delete, or schema modification operations allowed.
+- Enforced at connection level and within the MCP tool logic.
+3.5 AI Agent Interface
+- RESTful API or SDK for AI agents to:
+  - Request schema overview.
+  - Query specific tables or fields.
+  - Receive metadata and sample data.
+- Support for:
+  - Pagination and filtering.
+  - Rate limiting and access control.
+4. Non-Functional Requirements
+- Security: Encrypted connections, role-based access, audit logging.
+- Performance: Efficient schema crawling, caching for repeated requests.
+- Scalability: Handle multiple concurrent AI agent sessions.
+- Resilience: Graceful handling of permission errors or inaccessible databases.
+5. Environment & Dependencies
+- MSSQL Server 2008 R2 and above.
+- Hosting environment: Windows Server or Linux.
+- Optional: SQLCMD utility for job automation.
+6. Stakeholders
+- Michael Yu – O+O Applications Lead, GIT Asia
+- Billy Wong – Head of O+O Applications, GIT Asia
+- S Dhiraj Gawde – Engineering Lead (CRM, Database & Middleware)
+7. Additional Recommendations
+7.1 Credential Validation & Error Handling
+- Validate credentials before initiating schema discovery.
+- Provide clear error messages for:
+  - Invalid login
+  - Inaccessible databases
+  - Permission issues
+  - Network timeouts
+7.2 Connection Timeout & Retry Logic
+- Implement configurable timeout settings.
+- Include retry logic for transient connection failures.
+7.3 Audit & Logging
+- Log:
+  - Connection attempts (IP, timestamp)
+  - Schema discovery actions
+  - Data access requests
+- Ensure logs are secure and tamper-proof.
+7.4 Access Scope Control
+- Allow configuration to restrict:
+  - Specific databases or tables
+  - Sensitive columns (e.g., passwords, PII)
+- Support whitelisting/blacklisting at schema level.
+7.5 Data Sampling Strategy
+- Provide options for:
+  - Random sampling
+  - First N rows
+  - Filtered samples (e.g., recent entries)
+- Include metadata like row count and last updated timestamp.
+7.6 Rate Limiting & Throttling
+- Prevent abuse or overload by:
+  - Limiting number of requests per minute
+  - Throttling large data pulls
+7.7 Deployment Flexibility
+- Support containerized deployment (e.g., Docker).
+- Provide CLI and GUI options for configuration.
+7.8 Documentation & Onboarding
+- Include:
+  - Setup guide
+  - API reference
+  - Sample queries and responses
+  - Troubleshooting tips
