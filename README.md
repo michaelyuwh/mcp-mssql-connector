@@ -2,6 +2,10 @@
 
 A production-ready Model Context Protocol (MCP) server for Microsoft SQL Server that provides AI agents with secure, stateless database access capabilities.
 
+<a href="https://glama.ai/mcp/servers/@michaelyuwh/mcp-mssql-connector">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@michaelyuwh/mcp-mssql-connector/badge" alt="Enhanced MSSQL Server MCP server" />
+</a>
+
 ## ✨ **New Features & Enhancements**
 
 - **🔒 Advanced Security**: SQL injection protection, query validation, and configurable security policies
